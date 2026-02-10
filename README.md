@@ -1,4 +1,4 @@
-# IT_Sikkerhed_2026f
+# it_sikkerhed_2026f
 Dette er et projekt på **Zealand Næstved**. 
 
 ## Formål 
