@@ -208,3 +208,29 @@ Security gates er kontrolpunkter i udviklingsprocessen, hvor man stopper op og v
 - Overvågning af misbrug, brute-force og fejl  
 
 ---
+## Testresultater (PyTest)
+
+Jeg har kørt mine automatiske tests med PyTest for at sikre, at password‑valideringen fungerer korrekt.  
+Testene blev kørt med kommandoen:
+
+python -m pytest
+
+
+PyTest fandt i alt 10 tests, hvoraf:
+
+- 6 tests **passed** (mine egne password‑tests)
+- 2 tests **skipped** (kommer fra et andet bibliotek og er ikke relevante for projektet)
+- 0 tests fejlede
+
+![PyTest](image.png)
+
+### Hvad betyder resultatet?
+At alle mine egne tests passer, viser at:
+
+- password‑valideringen fungerer som forventet  
+- alle data‑drevne testcases giver det rigtige resultat  
+- funktionens logik er stabil og håndterer både gyldige og ugyldige passwords korrekt  
+
+Det giver en høj grad af sikkerhed for, at password‑reglerne er implementeret korrekt, og at systemet reagerer rigtigt på forskellige typer input.
+
+Security gate: **Build & Test**
