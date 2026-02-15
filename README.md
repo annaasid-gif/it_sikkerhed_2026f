@@ -234,3 +234,36 @@ At alle mine egne tests passer, viser at:
 Det giver en høj grad af sikkerhed for, at password‑reglerne er implementeret korrekt, og at systemet reagerer rigtigt på forskellige typer input.
 
 Security gate: **Build & Test**
+
+---
+
+## Testresultater for min flat_file_db
+
+Jeg har implementeret en flat file‑database i Python, hvor brugerdata gemmes i en JSON‑fil.  
+For at sikre at databasen fungerer korrekt, har jeg lavet automatiske unit tests med PyTest.
+
+
+### Resultat
+PyTest fandt i alt 8 tests:
+
+- 2 tests fra min `flat_file_db` (alle **passed**)
+- 6 tests fra mit password‑projekt (alle **passed**)
+
+Det betyder, at **alle mine tests kørte uden fejl**, og at både min flat_file_db og mine password‑funktioner fungerer som forventet.
+
+### Hvad viser resultatet?
+- Min database kan oprette og hente brugere korrekt  
+- Systemet håndterer situationer hvor en bruger ikke findes  
+- JSON‑filen bliver oprettet og opdateret som den skal  
+- Testene bekræfter, at funktionerne virker stabilt og uden fejl  
+
+### Risiko hvis en test fejler
+- Brugere kan blive gemt forkert  
+- Systemet kan returnere forkerte data  
+- Data kan gå tabt eller blive overskrevet  
+- Funktionerne kan opføre sig uforudsigeligt i et større system  
+
+### Screenshot
+Her er et screenshot af mine testresultater (krav fra opgaven):
+
+![flat_file_test](<image5.png>) 
