@@ -222,7 +222,7 @@ PyTest fandt i alt 10 tests, hvoraf:
 - 2 tests **skipped** (kommer fra et andet bibliotek og er ikke relevante for projektet)
 - 0 tests fejlede
 
-![PyTest](image.png)
+![PyTest](image4.png)
 
 ### Hvad betyder resultatet?
 At alle mine egne tests passer, viser at:
