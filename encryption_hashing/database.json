@@ -1,0 +1,20 @@
+[
+    {
+        "person_id": 1,
+        "first_name": "Anna",
+        "last_name": "A",
+        "address": "Zealand N\u00e6stved",
+        "street_number": 12,
+        "password": "Test123!",
+        "enabled": true
+    },
+    {
+        "person_id": 1,
+        "first_name": "Anna",
+        "last_name": "A",
+        "address": "Zealand N\u00e6stved",
+        "street_number": 12,
+        "password": "Test123!",
+        "enabled": true
+    }
+]

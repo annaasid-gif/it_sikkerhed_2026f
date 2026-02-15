@@ -267,3 +267,162 @@ Det betyder, at **alle mine tests kørte uden fejl**, og at både min flat_file_
 Her er et screenshot af mine testresultater (krav fra opgaven):
 
 ![flat_file_test](<image5.png>) 
+
+# Kryptering, Hashing og Benchmarking
+
+Dette projekt implementerer sikker håndtering af persondata ved hjælp af kryptering, hashing og automatiske tests. Formålet er at opfylde GDPR‑krav og sikre korrekt password‑beskyttelse.
+
+Projektet indeholder:
+- Symmetrisk kryptering (Fernet / AES‑128)
+- Asymmetrisk kryptering (RSA‑2048 – til benchmarking)
+- Hashing af passwords (bcrypt)
+- Benchmarking af flere kryptografiske algoritmer
+- Automatiske tests med pytest
+
+---
+
+## Algoritmer jeg havde at vælge imellem
+
+### Symmetrisk kryptering
+- AES‑128  
+- AES‑256  
+- Blowfish (128–448 bit)  
+- Fernet (AES‑128 + HMAC)
+
+### Asymmetrisk kryptering
+- RSA‑2048  
+- RSA‑4096  
+
+### Hashing
+- SHA‑256  
+- SHA‑512  
+- SHA3‑256  
+- SHA3‑512  
+- bcrypt  
+
+---
+
+## Algoritmer jeg valgte og hvorfor
+
+### ✔ Symmetrisk kryptering: Fernet (AES‑128)
+Jeg valgte Fernet, fordi den:
+- bygger på AES‑128 (sikker og moderne)
+- håndterer IV, nøgler og integritet automatisk
+- er nem at implementere korrekt
+- er velegnet til små systemer og flat‑file databaser
+
+---
+
+### ✔ Asymmetrisk kryptering: RSA‑2048 (kun til benchmarking)
+Jeg bruger ikke RSA i selve databasen, men jeg benchmarker den for at vise forskellen mellem symmetrisk og asymmetrisk kryptering.
+
+---
+
+### ✔ Hashing: bcrypt
+Jeg valgte bcrypt, fordi:
+- den er langsom med vilje (god mod brute‑force)
+- den bruger salt automatisk
+- den er standard til password‑sikkerhed
+- SHA‑algoritmerne er for hurtige til passwords
+
+---
+
+## Hvornår og hvorfor jeg krypterer data
+
+Jeg krypterer persondata **inden de gemmes** i databasen for at:
+- beskytte mod datatyveri
+- forhindre uautoriseret adgang
+- opfylde GDPR’s krav om dataminimering og databeskyttelse
+
+Felter der krypteres:
+- fornavn  
+- efternavn  
+- by  
+- email  
+- telefon  
+
+---
+
+## Hvornår og hvorfor jeg dekrypterer data
+
+Jeg dekrypterer kun data:
+- når brugeren skal vises
+- når data skal opdateres
+
+Jeg dekrypterer **aldrig hele databasen på én gang**, kun det felt der skal bruges.  
+Dette reducerer risikoen for datalæk og følger GDPR’s princip om dataminimering.
+
+---
+
+## Hvornår og hvorfor jeg fjerner dekrypteret data fra hukommelsen
+
+Dekrypterede værdier fjernes fra hukommelsen så snart de er brugt, fordi:
+- GDPR kræver dataminimering
+- dekrypterede data er sårbare, hvis programmet crasher
+- det reducerer risikoen for memory‑dump angreb
+- det sikrer, at følsomme oplysninger ikke ligger frit i RAM
+
+---
+
+## Bør jeg tage hensyn til noget andet?
+
+Ja, følgende sikkerhedspunkter er vigtige:
+
+- Krypteringsnøglen (key.key) skal opbevares sikkert og må ikke uploades til GitHub  
+- Passwords må aldrig kunne dekrypteres (kun hashes)  
+- Kryptering skal ske før data forlader applikationen  
+- Dekryptering skal kun ske i RAM og kun når nødvendigt  
+- Logs må ikke indeholde følsomme oplysninger  
+- Backup‑filer skal også krypteres  
+- Brugere skal have stærke password‑krav  
+
+---
+
+## Benchmarking af algoritmer
+
+Jeg har benchmarked både symmetriske, asymmetriske og hashing‑algoritmer for at måle CPU‑tid og RAM‑forbrug.
+
+### Resultater
+
+| Algoritme | CPU‑tid | RAM | Kommentar |
+|----------|---------|------|-----------|
+| **Fernet (AES‑128)** | ~6.98 ms | ~14 KB | Sikker, nem, inkluderer integritet |
+| **AES‑128 (rå)** | ~0.22 ms | ~2.7 KB | Meget hurtig, men kræver manuel håndtering |
+| **RSA‑2048** | ~2.72 ms | ~11 KB | Langsom, bruges kun til små datamængder |
+| **bcrypt** | ~327 ms | ~0.09 KB | Langsom med vilje, perfekt til passwords |
+| **SHA‑256** | ~0.058 ms | ~0.03 KB | Meget hurtig, ikke egnet til passwords |
+
+### Konklusion på benchmarking
+- Symmetrisk kryptering (AES/Fernet) er hurtigst  
+- Asymmetrisk kryptering (RSA) er tungest  
+- bcrypt er langsommere end SHA‑256 (som forventet)  
+- bcrypt er det sikre valg til passwords  
+- Fernet er det bedste valg til persondata  
+
+![benchmark_resultater](<image7.png>)
+---
+
+## Test af kryptering og hashing
+
+Jeg har lavet automatiske tests med pytest, som sikrer:
+- at kryptering og dekryptering virker korrekt
+- at hashing og password‑validering fungerer
+- at data ikke ændres under kryptering/dekryptering
+
+Alle tests passer.
+
+![Test af kryptering og hashing](<image6.png>)
+---
+
+## Samlet konklusion
+
+Jeg har implementeret en sikker løsning, der opfylder kravene i opgaven:
+
+- Persondata krypteres med en moderne og sikker algoritme (Fernet/AES‑128)  
+- Passwords hashes med bcrypt  
+- Data dekrypteres kun når nødvendigt  
+- Dekrypterede data fjernes hurtigt fra hukommelsen  
+- Jeg har benchmarked flere algoritmer og valgt de mest sikre og praktiske  
+- Jeg har testet alle funktioner automatisk med pytest  
+
+Systemet lever dermed op til både **GDPR**, **sikkerhedsstandarder** og **opgavens krav**.
